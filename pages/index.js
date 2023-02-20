@@ -2,11 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [data, setData] = useState();
-
+  const router = useRouter();
   const apiKey = process.env.NEXT_PUBLIC_API;
   const url = `https://api.nasa.gov/techtransfer/patent/?q=10&engine&api_key=${apiKey}`
 
@@ -21,6 +22,9 @@ export default function Home() {
     getTechTransferData();
   }, []);
 
+  const handleClick = () => {
+    router.push('/polychromatic')
+  }
   return (
     <>
       <Head>
@@ -32,6 +36,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.title}>Nasa Gallery</h1>
+          <p onClick={handleClick}>Polychromatic Page</p>
           {
             data && data.results.map((tech, index) => {
               return (
